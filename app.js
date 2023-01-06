@@ -28,7 +28,7 @@ app.use("/api/user", userRouter);
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.redirect(process.env.CLIENT_URL);
 });
 
 
