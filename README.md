@@ -7,18 +7,18 @@
 ### Using Technologies
 
 - [x] [Node.js](https://nodejs.org/en/)
-  - [x] [Express](https://expressjs.com/)
-  - [x] [Mongoose](https://mongoosejs.com/)
-  - [x] [Body-Parser](https://www.npmjs.com/package/body-parser)
-  - [x] [Cors](https://www.npmjs.com/package/cors)
-  - [x] [Dotenv](https://www.npmjs.com/package/dotenv)
-  - [x] [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-  - [x] [Bcrypt](https://www.npmjs.com/package/bcrypt)
-  - [x] [Multer](https://www.npmjs.com/package/multer)
-  - [x] [Nodemailer](https://www.npmjs.com/package/nodemailer)
-  - [x] [Nodemailer-sendgrid-transport](https://www.npmjs.com/package/nodemailer-sendgrid-transport)
-  - [x] [Nodemailer-smtp-transport](https://www.npmjs.com/package/nodemailer-smtp-transport)
-  - [x] [Nodemailer-express-handlebars](https://www.npmjs.com/package/nodemailer-express-handlebars)
+- [x] [Express](https://expressjs.com/)
+- [x] [Mongoose](https://mongoosejs.com/)
+- [x] [Body-Parser](https://www.npmjs.com/package/body-parser)
+- [x] [Cors](https://www.npmjs.com/package/cors)
+- [x] [Dotenv](https://www.npmjs.com/package/dotenv)
+- [x] [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [x] [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [x] [Multer](https://www.npmjs.com/package/multer)
+- [x] [Nodemailer](https://www.npmjs.com/package/nodemailer)
+- [x] [Nodemailer-sendgrid-transport](https://www.npmjs.com/package/nodemailer-sendgrid-transport)
+- [x] [Nodemailer-smtp-transport](https://www.npmjs.com/package/nodemailer-smtp-transport)
+- [x] [Nodemailer-express-handlebars](https://www.npmjs.com/package/nodemailer-express-handlebars)
 
 ### Additional Links
 
