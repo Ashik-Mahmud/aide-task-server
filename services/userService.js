@@ -39,6 +39,17 @@ exports.createUserService = async (data) => {
 
 /* Get all users */
 exports.getAllUsersService = async (filters) => {
-  const users = await User.find(filters.fields).skip(filters.skip).limit(filters.limit).sort({ createdAt: -1 });
+  const users = await User.find(filters.fields)
+    .skip(filters.skip)
+    .limit(filters.limit)
+    .sort({ createdAt: -1 });
   return users;
+};
+
+/* Update user */
+exports.updateUserService = async (id, data) => {
+  const user = await User.findByIdAndUpdate(id, data, {
+    new: true,
+  });
+  return user;
 };

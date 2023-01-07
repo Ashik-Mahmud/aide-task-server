@@ -26,6 +26,17 @@ router.post('/login', userController.loginUser);
 // @access Public
 router.get('/all', AuthGuard, userController.getAllUsers);
 
+// @route GET api/user/update/:id
+// @desc Update user
+// @access secret
+router.post('/update/:id', AuthGuard, upload.single('avatar'), userController.updateUser);
+
+
+// @route GET api/user/:id
+// @desc Get user by id
+// @access secret
+router.get('/:id', AuthGuard, userController.getUserById);
+
 
 // export router
 module.exports = router;
