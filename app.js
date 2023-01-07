@@ -14,6 +14,7 @@ const app = express();
 
 // import routes
 const userRouter = require("./routes/user.routes");
+const productRouter = require("./routes/product.routes");
 
 // apply global middleware
 app.use(express.json());
@@ -25,6 +26,9 @@ connectDB();
 
 // define routes
 app.use("/api/user", userRouter);
+
+// defines product route
+app.use("/api/product", productRouter)
 
 
 app.get("/", (req, res) => {
