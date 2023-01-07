@@ -8,6 +8,7 @@ const {
   getAllUsersService,
   findUserByIdService,
   updateUserService,
+  deleteUserService,
 } = require("../services/userService");
 const { UploadImage, DeleteImage } = require("../utils/Cloudinary");
 const generateToken = require("../utils/GenerateToken");
