@@ -16,6 +16,15 @@ exports.findUserByUsernameService = async (username) => {
   return user;
 };
 
+/* find user by username and email together */
+exports.findUserByUsernameAndEmailService = async (username, email) => {
+  const user = await User.findOne({
+    username,
+    email,
+  });
+  return user;
+};
+
 /* Find user by id */
 exports.findUserByIdService = async (id) => {
   const user = await User.findById(id);

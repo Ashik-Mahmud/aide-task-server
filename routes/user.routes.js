@@ -2,10 +2,14 @@ const router = require('express').Router();
 
 // import controllers
 const userController = require('../controllers/user.controller');
+const upload = require('../utils/Multer');
 
 
-// define routes
-router.post('/register', userController.registerUser);
+
+// @route POST api/user/register
+// @desc Register user
+// @access Public
+router.post('/register', upload.single('avatar'), userController.registerUser);
 
 
 

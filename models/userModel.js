@@ -40,9 +40,14 @@ const userSchema = new Schema({
     enum: ["active", "inactive", "pending"],
   },
   avatar: {
-    type: String,
-    required: true,
-    trim: true,
+    url: {
+      type: String,
+      trim: true,
+    },
+    publicId: {
+      type: String,
+      trim: true,
+    },
   },
 });
 
