@@ -5,6 +5,7 @@ const {
   findUserByUsernameAndEmailService,
   createUserService,
   findUserByEmailService,
+  getAllUsersService,
 } = require("../services/userService");
 const { UploadImage } = require("../utils/Cloudinary");
 const generateToken = require("../utils/GenerateToken");
@@ -88,7 +89,48 @@ const loginUser = async (req, res) => {
   }
 };
 
+// get all users
+const getAllUsers = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { limit, page, q } = req.query;
+
+    const filters = {
+      fields: {
+        _id: _id,
+      },
+    };
+
+    if (q) {
+      filters.fields.$or = [
+        { username: { $regex: q, $options: "i" } },
+        { email: { $regex: q, $options: "i" } },
+        { name: { $regex: q, $options: "i" } },
+      ];
+    }
+
+    if (limit && page) {
+      filters.limit = parseInt(limit);
+      filters.page = parseInt(page);
+      filters.skip = (parseInt(page) - 1) * parseInt(limit);
+    }
+
+    const users = await getAllUsersService(filters);
+    return res.status(200).send({
+      success: true,
+      message: "Users fetched successfully",
+      users: users,
+    });
+  } catch (err) {
+    return res.status(500).send({
+      message: "Something went wrong - " + err.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getAllUsers,
 };

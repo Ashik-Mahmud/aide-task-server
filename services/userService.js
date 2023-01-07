@@ -36,3 +36,9 @@ exports.createUserService = async (data) => {
   const user = await User.create(data);
   return user;
 };
+
+/* Get all users */
+exports.getAllUsersService = async (filters) => {
+  const users = await User.find(filters.fields).skip(filters.skip).limit(filters.limit).sort({ createdAt: -1 });
+  return users;
+};
