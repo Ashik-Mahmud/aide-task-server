@@ -5,7 +5,7 @@ const userController = require('../controllers/user.controller');
 
 
 // define routes
-router.get('/register', userController.registerUser);
+router.post('/register', userController.registerUser);
 
 
 
