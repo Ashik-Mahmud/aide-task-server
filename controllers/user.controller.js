@@ -99,7 +99,8 @@ const getAllUsers = async (req, res) => {
 
     const filters = {
       fields: {
-        _id: _id,
+        // except me 
+        _id: { $ne: _id },
       },
     };
 
@@ -204,10 +205,38 @@ const getUserById = async (req, res) => {
   }
 };
 
+// delete user
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await findUserByIdService(id);
+    if (!user) {
+      return res.status(400).send({
+        message: "User not found",
+        success: false,
+      });
+    }
+    if (user.avatar?.public_id) {
+      await DeleteImage(user.avatar?.public_id, "avatar");
+    }
+    await deleteUserService(id);
+    return res.status(200).send({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).send({
+      message: "Something went wrong - " + err.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getAllUsers,
   getUserById,
   updateUser,
+  deleteUser,
 };

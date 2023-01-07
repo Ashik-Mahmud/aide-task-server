@@ -32,6 +32,12 @@ router.get('/all', AuthGuard, userController.getAllUsers);
 router.post('/update/:id', AuthGuard, upload.single('avatar'), userController.updateUser);
 
 
+// @route DELETE api/user/delete/:id
+// @desc Delete user
+// @access secret
+router.delete('/delete/:id', AuthGuard, userController.deleteUser);
+
+
 // @route GET api/user/:id
 // @desc Get user by id
 // @access secret
