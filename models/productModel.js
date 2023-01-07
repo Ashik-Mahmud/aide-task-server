@@ -17,15 +17,23 @@ const productSchema = new Schema(
     },
     category: {
       type: String,
-      required: true,
+      trim: true,
+      default: "Other",
     },
     image: {
-      type: String,
-      required: true,
+      url: {
+        type: String,
+        required: true,
+      },
+      public_id: {
+        type: String,
+        required: true,
+      },
     },
     brand: {
       type: String,
-      required: true,
+      trim: true,
+      default: "Own",
     },
     countInStock: {
       type: Number,
