@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const User = require("../models/userModel");
 
 // brand new controller for user
 const {
@@ -16,6 +17,7 @@ const generateToken = require("../utils/GenerateToken");
 const registerUser = async (req, res) => {
   try {
     const { email, username, password, ...others } = JSON.parse(req.body.data);
+
     const isExist = await findUserByUsernameAndEmailService(username, email);
     if (isExist) {
       return res.status(400).send({
@@ -25,7 +27,7 @@ const registerUser = async (req, res) => {
     }
     // password hashing
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password || username, salt);
     if (req.file?.path) {
       const result = await UploadImage(req.file.path, "avatar");
       const avatar = result.secure_url;
@@ -67,7 +69,7 @@ const loginUser = async (req, res) => {
     const user = await findUserByEmailService(email);
     if (!user) {
       return res.status(400).send({
-        message: "User not found",
+        message: "Invalid credentials",
         success: false,
       });
     }
@@ -78,11 +80,16 @@ const loginUser = async (req, res) => {
         success: false,
       });
     }
+
+    const { password: _, ...others } = user.toObject();
     const token = await generateToken(user._id);
     return res.status(200).send({
       success: true,
       message: "User logged in successfully",
-      token: token,
+      data: {
+        token: token,
+        user: others,
+      },
     });
   } catch (err) {
     return res.status(500).send({
@@ -100,7 +107,7 @@ const getAllUsers = async (req, res) => {
 
     const filters = {
       fields: {
-        // except me 
+        // except me
         _id: { $ne: _id },
       },
     };
@@ -120,10 +127,14 @@ const getAllUsers = async (req, res) => {
     }
 
     const users = await getAllUsersService(filters);
+    const count = await User.countDocuments({
+      _id: { $ne: _id },
+    });
     return res.status(200).send({
       success: true,
       message: "Users fetched successfully",
       users: users,
+      total: count
     });
   } catch (err) {
     return res.status(500).send({
@@ -209,7 +220,8 @@ const getUserById = async (req, res) => {
 // delete user
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
+   
     const user = await findUserByIdService(id);
     if (!user) {
       return res.status(400).send({

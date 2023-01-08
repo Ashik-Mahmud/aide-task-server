@@ -13,7 +13,7 @@ const AuthGuard = require('../middlewares/AuthGuard');
 // @route POST api/user/register
 // @desc Register user
 // @access Public
-router.post('/register', upload.single('avatar'), userController.registerUser);
+router.post('/register', AuthGuard, upload.single('avatar'), userController.registerUser);
 
 
 // @route POST api/user/login
@@ -29,7 +29,7 @@ router.get('/all', AuthGuard, userController.getAllUsers);
 // @route GET api/user/update/:id
 // @desc Update user
 // @access secret
-router.post('/update/:id', AuthGuard, upload.single('avatar'), userController.updateUser);
+router.put('/update/:id', AuthGuard, upload.single('avatar'), userController.updateUser);
 
 
 // @route DELETE api/user/delete/:id
