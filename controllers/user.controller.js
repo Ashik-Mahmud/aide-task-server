@@ -134,7 +134,7 @@ const getAllUsers = async (req, res) => {
       success: true,
       message: "Users fetched successfully",
       users: users,
-      total: count
+      total: count,
     });
   } catch (err) {
     return res.status(500).send({
@@ -150,18 +150,11 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const { email, username, ...others } = JSON.parse(req.body.data);
     const isExist = await findUserByUsernameAndEmailService(username, email);
-    if (isExist) {
-      return res.status(400).send({
-        message: "User already exist",
-        success: false,
-      });
-    }
-
-    if (isExist?.avatar?.public_id) {
-      await DeleteImage(isExist.avatar.public_id, "avatar");
-    }
 
     if (req.file?.path) {
+      if (isExist?.avatar?.public_id) {
+        await DeleteImage(isExist.avatar.public_id, "avatar");
+      }
       const result = await UploadImage(req.file.path, "avatar");
       const avatar = result.secure_url;
       const publicId = result.public_id;
@@ -171,11 +164,15 @@ const updateUser = async (req, res) => {
           publicId,
         };
       }
-    }
+    } 
 
     const data = {
       email,
       username,
+      avatar: {
+        url: isExist?.avatar?.url,
+        publicId: isExist?.avatar?.publicId,
+      },
       ...others,
     };
 
@@ -220,8 +217,8 @@ const getUserById = async (req, res) => {
 // delete user
 const deleteUser = async (req, res) => {
   try {
-    const {id} = req.params;
-   
+    const { id } = req.params;
+
     const user = await findUserByIdService(id);
     if (!user) {
       return res.status(400).send({
